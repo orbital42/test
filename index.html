@@ -2,7 +2,33 @@
   <head>
     
   </head>
-  <body>
+  <body>import requests
+
+def search_song(song_name):
+    base_url = "https://api.genius.com/search"
+    token = "YOUR_GENIUS_API_TOKEN"  # Replace with your Genius API token
+    headers = {"Authorization": f"Bearer {token}"}
+    params = {"q": song_name}
+    
+    response = requests.get(base_url, headers=headers, params=params)
+    
+    if response.status_code == 200:
+        results = response.json().get("response", {}).get("hits", [])
+        
+        if results:
+            for result in results[:5]:  # Show top 5 results
+                title = result["result"]["full_title"]
+                link = result["result"]["url"]
+                print(f"{title}: {link}")
+        else:
+            print("No results found.")
+    else:
+        print("Failed to connect.")
+
+if __name__ == "__main__":
+    song = input("Enter song name: ")
+    search_song(song)
+
     <h1>funfact:</h1>
     <h1>jamisonsmellsfeet</h1>
       <style>
